@@ -1,0 +1,184 @@
+# Args: <obj_file> <output_dir>
+{
+  "version": 3,
+  "setup": {
+    "blender_install_path": "/home_local/<env:USER>/blender/",
+    "pip": [
+      "h5py",
+      "imageio"
+    ]
+  },
+  "modules": [
+  {
+    "module": "main.Initializer",
+    "config": {
+      "global": {
+        "output_dir": "<args:1>",
+        "max_bounces": 200,
+        "diffuse_bounces": 200,
+        "glossy_bounces": 200,
+        "transmission_bounces": 200,
+        "transparency_bounces": 200
+      }
+    }
+  },
+    {
+      "module": "loader.SuncgLoader",
+      "config": {
+        "path": "<args:0>"
+      }
+    },
+    {
+      "module": "camera.PairwiseSuncgCameraSampler",
+      "config": {
+        "intrinsics": {
+          "fov": 1.086608,
+          "pixel_aspect_x": 1.33333333,
+          "resolution_x": 128,
+          "resolution_y": 128
+        },
+        "cam_poses": [{
+            "max_tries": 10000,
+            "number_of_samples": 20,
+            "proximity_checks": {
+              "min": 0.5
+            },
+            "location": {
+              "provider":"sampler.Mixed3d",
+              "param1":[0, 0, 1.4],
+              "param2":[0, 0, 1],
+              "max":[0, 0, 2],
+              "min":[0, 0, 0.5],
+              "distr": [ "gaussian", "gaussian", "gaussian" ]
+            },
+            "min_interest_score": 0,
+            "rotation": {
+              "value": {
+                "provider":"sampler.Mixed3d",
+                "param1":[60, 0, 0],
+                "param2":[25, 15, 360],
+                "max":[100, 30, 360],
+                "min":[20, -30, 0],
+                "convert_deg_to_rad": True,
+                "distr": ["gaussian", "gaussian", "uniform"]
+              }
+            },
+          }]
+      }
+    },
+    {
+      "module": "lighting.SuncgLighting",
+      "config": {}
+    },
+    {
+      "module": "manipulators.MaterialManipulator",
+      "config": {
+        "selector": {
+          "provider": "getter.Material",
+          "conditions": [
+            { "name": "wood.*" },
+            { "name": "laminate.*" },
+            { "name": "beam.*" }
+          ]
+        },
+        "cf_set_Roughness": {
+          "provider": "sampler.Value",
+          "type": "float",
+          "min": 0.05,
+          "max": 0.5,
+        },
+        "cf_set_Specular": {
+          "provider": "sampler.Value",
+          "type": "float",
+          "min": 0.5,
+          "max": 1,
+        },
+        "cf_color_link_to_displacement": {
+          "provider": "sampler.Value",
+          "type": "float",
+          "min": 0.001,
+          "max": 0.15,
+        },
+        "mode": "once_for_each"
+      }
+    },
+    {
+      "module": "manipulators.MaterialManipulator",
+      "config": {
+        "selector": {
+          "provider": "getter.Material",
+          "conditions": [
+            { "name": "tile.*" },
+            { "name": "brick.*" },
+            { "name": "stone.*" }
+          ]
+        },
+        "cf_set_Roughness": {
+          "provider": "sampler.Value",
+          "type": "float",
+          "min": 0,
+          "max": 0.2,
+        },
+        "cf_set_Specular": {
+          "provider": "sampler.Value",
+          "type": "float",
+          "min": 0.9,
+          "max": 1,
+        },
+        "mode": "once_for_each"
+      }
+    },
+    {
+      "module": "manipulators.MaterialManipulator",
+      "config": {
+        "selector": {
+          "provider": "getter.Material",
+          "conditions": [
+            { "name": "carpet.*" },
+            { "name": "textile.*" }
+          ]
+        },
+        "cf_set_Roughness": {
+          "provider": "sampler.Value",
+          "type": "float",
+          "min": 0.5,
+          "max": 1.0,
+        },
+        "cf_set_Specular": {
+          "provider": "sampler.Value",
+          "type": "float",
+          "min": 0.1,
+          "max": 0.3,
+        },
+        "mode": "once_for_each"
+      }
+    },
+    {
+      "module": "renderer.RgbRenderer",
+      "config": {
+        "output_key": "colors",
+        "render_distance": true,
+        "use_mist_distance": false,
+        "distance_output_key": "depth",
+        "distance_range": 1000,
+        "samples": 30
+      }
+    },
+    {
+      "module": "writer.CameraStateWriter",
+      "config": {
+          "attributes_to_write": ["location", "rotation_euler", "half_fov_x", "half_fov_y", "customprop_group_id", "customprop_room_id"]
+      }
+    },
+    {
+      "module": "writer.Hdf5Writer",
+      "config": {
+        "postprocessing_modules": {
+          "depth": [
+            { "module": "postprocessing.TrimRedundantChannels" }
+          ]
+        }
+      }
+    }
+  ]
+}

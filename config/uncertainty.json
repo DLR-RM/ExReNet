@@ -1,0 +1,69 @@
+{
+  "data": {
+    "val_batch_size": 32,
+    "batch_size": 32,
+    "image_size": 128,
+    "augmentation": {
+      "brightness": 0.2,
+      "contrast": [
+        0.2,
+        3
+      ],
+      "saturation": [
+        0.5,
+        2
+      ]
+    },
+    "resize_images": 0,
+    "inverse_pose_repr": true,
+    "train_pair_file": "<scannet>/pairs_d0.6_a30_shuffle.txt",
+    "val_pair_file": "<scannet>/pairs_test_d0.6_a30_shuffle.txt",
+    "train_data_path": "<scannet>/scans_128/",
+    "val_data_path": "<scannet>/scans_test_128/"
+  },
+  "train": {
+    "optimizer": {
+      "lr": 5e-05,
+      "name": "adam",
+      "mom": 0
+    },
+    "provide_translation_scale": true,
+    "squared_loss": false,
+    "aux_loss": true,
+    "aux_loss_weight": 10
+  },
+  "model_type": "HCNet",
+  "model": {
+    "emb_set_output_layer": [
+      "conv4_block6_out",
+      "conv3_block4_out",
+      "conv2_block3_out"
+    ],
+    "pred_scale_extra": true,
+    "att_iters": [
+      4,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "src_att_iters": [
+      8,
+      4
+    ],
+    "dest_att_iters": [
+      8,
+      12
+    ],
+    "dest_att_border": [
+      1,
+      0
+    ],
+    "upsacel_facs": [
+      4
+    ],
+    "unet_style": true,
+    "dropout": 0.1
+  }
+}
