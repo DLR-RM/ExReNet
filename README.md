@@ -285,7 +285,7 @@ Evaluate the network stored in `runs/default` on 7-Scenes.
 python3 batch_inference.py config/default.json runs/default <7scenes> 
 ```
 
-## Inference with scale
+#### Inference with scale
 
 Evaluate the network stored in `runs/default` on 7-Scenes using scale information.
 
@@ -293,7 +293,7 @@ Evaluate the network stored in `runs/default` on 7-Scenes using scale informatio
 python3 batch_inference.py config/default.json runs/default <7scenes> --scale
 ```
 
-## Inference with uncertainty
+#### Inference with uncertainty
 
 Evaluate the network stored in `runs/uncertainty` on 7-Scenes using scale and uncertainty information.
 
