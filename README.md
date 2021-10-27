@@ -282,7 +282,7 @@ python3 data/7scenes_to_hdf5.py <7scenes>
 Evaluate the network stored in `runs/default` on 7-Scenes. 
 
 ```
-python3 batch_inference.py runs/default <7scenes> 
+python3 batch_inference.py config/default.json runs/default <7scenes> 
 ```
 
 ## Inference with scale
@@ -290,7 +290,7 @@ python3 batch_inference.py runs/default <7scenes>
 Evaluate the network stored in `runs/default` on 7-Scenes using scale information.
 
 ```
-python3 batch_inference.py runs/default <7scenes> --scale
+python3 batch_inference.py config/default.json runs/default <7scenes> --scale
 ```
 
 ## Inference with uncertainty
@@ -298,5 +298,60 @@ python3 batch_inference.py runs/default <7scenes> --scale
 Evaluate the network stored in `runs/uncertainty` on 7-Scenes using scale and uncertainty information.
 
 ```
-python3 batch_inference.py runs/uncertainty <7scenes> --scale --uncertainty
+python3 batch_inference.py config/uncertainty.json runs/uncertainty <7scenes> --scale --uncertainty
 ```
+
+## Pretrained models
+
+You can download some pretrained models via the GitHub release page.
+After downloading, unpack the zip into the `runs/` directory and then run the inference command as specified in the following subsections:
+
+### scannet_default
+
+This model was trained on ScanNet with the `default.json` config.
+For evaluation on 7-Scene run:
+
+```
+python3 batch_inference.py config/default.json runs/scannet_default/ <7scenes> --legacy --scale
+```
+
+The `--legacy` flag is necessary here, as the network was trained with a slightly older code that applied an additional 90° rotation to the relative poses.
+
+Should output:
+
+```
+chess/test: 0.060m 2.15°
+fire/test: 0.092m 3.20°
+heads/test: 0.041m 3.30°
+office/test: 0.071m 2.17°
+pumpkin/test: 0.109m 2.65°
+redkitchen/test: 0.085m 2.57°
+stairs/test: 0.329m 7.34°
+Mean: 0.112m 3.34°
+```
+
+### suncg_default
+
+This model was trained on synthetic data generated with BlenderProc and SUNCG scenes. 
+For training, the `default.json` config was used.
+For evaluation on 7-Scene run:
+
+```
+python3 batch_inference.py config/default.json runs/suncg_default/ <7scenes> --scale
+```
+
+Should output:
+
+```
+chess/test: 0.048m 1.63°
+fire/test: 0.074m 2.54°
+heads/test: 0.033m 2.71°
+office/test: 0.059m 1.75°
+pumpkin/test: 0.074m 2.04°
+redkitchen/test: 0.068m 2.10°
+stairs/test: 0.194m 4.87°
+Mean: 0.079m 2.52°
+```
+
+The results here are even a bit better than the ones listed in the paper.
+This is caused by the fact that more accurate matching labels for all image pairs were used for training.
