@@ -303,10 +303,10 @@ python3 batch_inference.py config/uncertainty.json runs/uncertainty <7scenes> --
 
 ## Pretrained models
 
-You can download some pretrained models via the GitHub release page.
+You can download some pretrained models via the [GitHub release page](https://github.com/DLR-RM/ExReNet/releases).
 After downloading, unpack the zip into the `runs/` directory and then run the inference command as specified in the following subsections:
 
-### scannet_default
+### scannet_default.zip
 
 This model was trained on ScanNet with the `default.json` config.
 For evaluation on 7-Scene run:
@@ -315,7 +315,7 @@ For evaluation on 7-Scene run:
 python3 batch_inference.py config/default.json runs/scannet_default/ <7scenes> --legacy --scale
 ```
 
-The `--legacy` flag is necessary here, as the network was trained with a slightly older code that applied an additional 90° rotation to the relative poses.
+The `--legacy` flag is necessary here, as the network was trained with a slightly older code that applied an additional [90° rotation](https://github.com/DLR-RM/ExReNet/blob/main/src/data/Data.py#L107) to the relative poses.
 
 Should output:
 
@@ -330,11 +330,11 @@ stairs/test: 0.329m 7.34°
 Mean: 0.112m 3.34°
 ```
 
-### suncg_default
+### suncg_default.zip
 
 This model was trained on synthetic data generated with BlenderProc and SUNCG scenes. 
 For training, the `default.json` config was used.
-For evaluation on 7-Scene run:
+For evaluation on 7-Scenes run:
 
 ```
 python3 batch_inference.py config/default.json runs/suncg_default/ <7scenes> --scale
