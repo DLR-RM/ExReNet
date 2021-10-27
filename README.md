@@ -304,7 +304,8 @@ python3 batch_inference.py config/uncertainty.json runs/uncertainty <7scenes> --
 ## Pretrained models
 
 You can download some pretrained models via the [GitHub release page](https://github.com/DLR-RM/ExReNet/releases).
-After downloading, unpack the zip into the `runs/` directory and then run the inference command as specified in the following subsections:
+After downloading, unpack the zip into the `runs/` directory and then run the inference command as specified in the following subsections.
+Make sure you have prepared your 7-Scenes dataset like described in [Prepare 7-Scenes](https://github.com/DLR-RM/ExReNet#prepare-7-scenes).
 
 ### scannet_default.zip
 
