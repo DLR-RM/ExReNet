@@ -7,11 +7,15 @@ ICRA 2021
 ## BibTeX
 
 ```
-@inproceedings{WinkelbauerICRA21,
-    author={Winkelbauer, Dominik and Denninger, Maximilian and Triebel, Rudolph},
-    title={Learning to Localize in New Environments from Synthetic Training Data},
-    booktitle={ICRA},
-    year={2021}
+@INPROCEEDINGS{9560872,
+  author={Winkelbauer, Dominik and Denninger, Maximilian and Triebel, Rudolph},
+  booktitle={2021 IEEE International Conference on Robotics and Automation (ICRA)}, 
+  title={Learning to Localize in New Environments from Synthetic Training Data}, 
+  year={2021},
+  volume={},
+  number={},
+  pages={5840-5846},
+  doi={10.1109/ICRA48506.2021.9560872}
 }
 ```
 
