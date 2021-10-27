@@ -2,7 +2,8 @@
 
 Dominik Winkelbauer, Maximilian Denninger, Rudolph Triebel
 ICRA 2021
-[PDF](https://arxiv.org/abs/2011.04539)
+
+[Arxiv](https://arxiv.org/abs/2011.04539) | [IEEE](https://ieeexplore.ieee.org/abstract/document/9560872/)
 
 ## BibTeX
 
